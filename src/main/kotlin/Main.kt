@@ -20,6 +20,7 @@ fun mainMenu(): Int {
           2) List Players
           3) Find Player
           4) Delete Player
+          5) Update Player
         
           0) Exit
         
@@ -40,12 +41,14 @@ fun runMenu() {
             2 -> listPlayers()
             3 -> findPlayer()
             4 -> deletePlayer()
+            5 -> updatePlayer()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
 
     } while (true)
 }
+
 
 fun addPlayer() {
     print("Enter player name: ")
@@ -131,9 +134,59 @@ fun deletePlayer() {
     playerController.removePlayer(playerToDelete)
 
     println("Player deleted successfully!")
+
+}
+fun updatePlayer() {
+    listPlayers()
+
+    val players = playerController.getPlayers()
+
+    if (players.isNotEmpty()) {
+        print("Enter the number of the player to update: ")
+        val indexToUpdate = (readLine()?.toIntOrNull() ?: 0) - 1
+
+        if (indexToUpdate >= 0 && indexToUpdate < players.size) {
+
+            print("Enter player name: ")
+            val name = readLine() ?: ""
+
+            print("Enter player position: ")
+            val position = readLine() ?: ""
+
+            print("Enter squad number: ")
+            val squadNumber = readLine()?.toIntOrNull() ?: 0
+
+            print("Enter player age: ")
+            val age = readLine()?.toIntOrNull() ?: 0
+
+            print("Enter appearances: ")
+            val appearances = readLine()?.toIntOrNull() ?: 0
+
+            val updatedPlayer = Player(
+                name,
+                position,
+                squadNumber,
+                age,
+                appearances
+            )
+
+            if (playerController.updatePlayer(indexToUpdate, updatedPlayer)) {
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+
+        } else {
+            println("Invalid player number")
+        }
+    }
 }
 
-fun exitApp() {
-    println("Exiting Football Manager... goodbye!")
-    kotlin.system.exitProcess(0)
-}
+    fun exitApp() {
+        println("Exiting Football Manager... goodbye!")
+        kotlin.system.exitProcess(0)
+
+
+            }
+
+
