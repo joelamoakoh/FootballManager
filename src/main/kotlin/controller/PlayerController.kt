@@ -43,4 +43,15 @@ class PlayerController {
     fun findPlayer(name : String): Player? {
         return players.find { it.name.equals(name, ignoreCase = true) }
     }
+    fun listPlayersByPosition(position: String): ArrayList<Player> {
+        val playersByPosition = ArrayList<Player>()
+
+        for (player in players) {
+            if (player.position.equals(position, ignoreCase = true)) {
+                playersByPosition.add(player)
+            }
+        }
+
+        return playersByPosition
+    }
 }

@@ -21,7 +21,7 @@ fun mainMenu(): Int {
           3) Find Player
           4) Delete Player
           5) Update Player
-        
+          6) List Player by Position
           0) Exit
         
         ========================================
@@ -42,6 +42,7 @@ fun runMenu() {
             3 -> findPlayer()
             4 -> deletePlayer()
             5 -> updatePlayer()
+            6 -> listPlayersByPosition()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -49,6 +50,18 @@ fun runMenu() {
     } while (true)
 }
 
+fun listPlayersByPosition() {
+    print("Enter the position to search for: ")
+    val position = readLine() ?: ""
+
+    val playersByPosition = playerController.listPlayersByPosition(position)
+
+    if (playersByPosition.isEmpty()) {
+        println("No players found in that position")
+    } else {
+        println(playersByPosition)
+    }
+}
 
 fun addPlayer() {
     print("Enter player name: ")
@@ -180,6 +193,7 @@ fun updatePlayer() {
             println("Invalid player number")
         }
     }
+
 }
 
     fun exitApp() {
