@@ -200,7 +200,6 @@ fun updatePlayer() {
         println("Exiting Football Manager... goodbye!")
         kotlin.system.exitProcess(0)
 
-
             }
 
 
