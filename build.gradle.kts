@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "2.2.10"
     jacoco
     application
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 group = "ie.setu"
