@@ -1,7 +1,12 @@
 import controller.PlayerController
+import controller.MatchController
 import model.Player
+import model.Match
+import sun.security.util.KnownOIDs
+import sun.security.util.KnownOIDs.findMatch
 
 val playerController = PlayerController()
+    val matchController = MatchController()
 
 fun main() {
     runMenu()
@@ -22,6 +27,11 @@ fun mainMenu(): Int {
           4) Delete Player
           5) Update Player
           6) List Player by Position
+          7) Add Match
+          8) List Matches
+          9) Find Match
+          10) Update match
+          11) Delete Match
           0) Exit
         
         ========================================
@@ -43,11 +53,137 @@ fun runMenu() {
             4 -> deletePlayer()
             5 -> updatePlayer()
             6 -> listPlayersByPosition()
+            7 -> addMatch()
+            8 -> listMatches()
+            9 -> findMatch()
+            10 -> updateMatch()
+            11 -> deleteMatch()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
 
     } while (true)
+}
+
+fun findMatch() {
+    print("Enter opponent to search for: ")
+    val opponent = readLine() ?: ""
+
+    val match = matchController.findMatch(opponent)
+
+    if (match != null) {
+        println("Match found: $match")
+    } else {
+        println("Match not found")
+    }
+}
+
+fun deleteMatch() {
+    listMatches()
+
+    val matches = matchController.getMatches()
+
+    if (matches.isNotEmpty()) {
+        print("Enter the number of the match to delete: ")
+        val indexToDelete = (readLine()?.toIntOrNull() ?: 0) - 1
+
+        if (indexToDelete >= 0 && indexToDelete < matches.size) {
+            val matchToDelete = matches[indexToDelete]
+
+            matchController.removeMatch(matchToDelete)
+
+            println("Match Deleted Successfully")
+        } else {
+            println("Invalid match number")
+        }
+    }
+}
+
+fun updateMatch() {
+    listMatches()
+
+    val matches = matchController.getMatches()
+
+    if (matches.isNotEmpty()) {
+        print("Enter the number of the match to update: ")
+        val indexToUpdate = (readLine()?.toIntOrNull() ?: 0) - 1
+
+        if (indexToUpdate >= 0 && indexToUpdate < matches.size) {
+
+            print("Enter opponent: ")
+            val opponent = readLine() ?: ""
+
+            print("Enter date: ")
+            val date = readLine() ?: ""
+
+            print("Enter competition: ")
+            val competition = readLine() ?: ""
+
+            print("Enter score: ")
+            val score = readLine() ?: ""
+
+            print("Is this a home match? (true/false): ")
+            val homeMatch = readLine()?.toBooleanStrictOrNull() ?: false
+
+            val updatedMatch = Match(
+                opponent,
+                date,
+                competition,
+                score,
+                homeMatch
+            )
+
+            if (matchController.updateMatch(indexToUpdate, updatedMatch)) {
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+
+        } else {
+            println("Invalid match number")
+        }
+    }
+}
+
+fun listMatches() {
+    if (matchController.getMatches().isNotEmpty()) {
+        println("========== MATCHES ==========")
+
+        matchController.getMatches().forEachIndexed { index, match ->
+            println("${index + 1}. $match")
+        }
+    } else {
+        println("No matches stored")
+    }
+}
+
+fun addMatch() {
+    print("Enter opponent: ")
+    val opponent = readLine() ?: ""
+
+    print("Enter date: ")
+    val date = readLine() ?: ""
+
+    print("Enter competition: ")
+    val competition = readLine() ?: ""
+
+    print("Enter score: ")
+    val score = readLine() ?: ""
+
+    print("Is this a home match? (true/false): ")
+    val homeMatch = readLine()?.toBooleanStrictOrNull() ?: false
+
+    val match = Match(
+        opponent,
+        date,
+        competition,
+        score,
+        homeMatch
+    )
+
+    matchController.addMatch(match)
+
+    println("Match Added Successfully")
 }
 
 fun listPlayersByPosition() {
