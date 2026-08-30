@@ -106,6 +106,7 @@ fun updateMatch() {
 
     if (matches.isNotEmpty()) {
         print("Enter the number of the match to update: ")
+        // Convers the player number to the arraylist index
         val indexToUpdate = (readLine()?.toIntOrNull() ?: 0) - 1
 
         if (indexToUpdate >= 0 && indexToUpdate < matches.size) {

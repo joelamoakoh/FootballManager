@@ -44,6 +44,7 @@ class PlayerController {
      * @return player with that index or null if index is not used
      */
     fun findPlayer(index: Int): Player? {
+        //Checks the index is within the range that can be used
         return if (index >= 0 && index < players.size) {
             players[index]
         } else {
@@ -60,6 +61,7 @@ class PlayerController {
      */
 
     fun updatePlayer(indexToUpdate: Int, player: Player?): Boolean {
+        //Finds existing player before you can update details
         val foundPlayer = findPlayer(indexToUpdate)
 
         if ((foundPlayer != null) && (player != null)) {
@@ -94,6 +96,7 @@ class PlayerController {
         val playersByPosition = ArrayList<Player>()
 
         for (player in players) {
+            //Adds the players only in that position
             if (player.position.equals(position, ignoreCase = true)) {
                 playersByPosition.add(player)
             }
