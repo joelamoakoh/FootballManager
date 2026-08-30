@@ -1,6 +1,6 @@
 # Football Manager
 
-# Created a football manager app using kotin
+# Created a football manager app using kotlin
 
 ## Features
 - Add players
@@ -17,6 +17,13 @@ Each player has:
 - Squad number
 - Age
 - Appearances
+
+## Match Information
+- Opponent
+- Date
+- Competition
+- Score
+- Home matc
 
 
 ##  Used technologies
